@@ -1,40 +1,47 @@
-import java.util.HashMap;
-import java.util.stream.IntStream;
+import java.util.*;
 
 public class Matrix {
-    private int[][] matrix;
 
-    Matrix(String matrixAsString) {
-        String[] res = matrixAsString.split("\n");
-        matrix = new int[res.length][res[0].split(" ").length];
-        for (int i = 0; i < res.length; i++) {
-            String[] line = res[i].split(" ");
-            for (int j = 0; j < line.length; j++) {
-                matrix[i][j] = Integer.parseInt(line[j]);
+
+    List<List<Integer>> values;
+    Set<MatrixCoordinate> coordinates = new HashSet<>();
+
+    Matrix(List<List<Integer>> values) {
+        this.values = values;
+        if (!values.isEmpty()) {
+            for (int row = 0; row < values.size(); row++) {
+                for (int column = 0; column < values.get(row).size(); column++) {
+                    final int currentValue = values.get(row).get(column);
+                    if (currentValue == getRowMax(row) && currentValue == getMinInColumn(column)) {
+                        coordinates.add(new MatrixCoordinate(row + 1, column + 1));
+                    }
+                }
             }
         }
     }
 
-    int[] getRow(int rowNumber) {
-        return matrix[rowNumber - 1];
+    Set<MatrixCoordinate> getSaddlePoints() {
+        return coordinates;
     }
 
-    //  short method to get column
-    int[] getColumn(int columnNumber) {
-        int res[] = new int[matrix.length];
-        for (int i = 0; i < matrix.length; i++){
-            res[i] = matrix[i][columnNumber-1];
+    private int getMinInColumn(int column) {
+        List<Integer> valuesInColumn = new ArrayList<>();
+        for (int row = 0; row < values.size(); row++) {
+            valuesInColumn.add(values.get(row).get(column));
         }
-        //System.out.println(res[);
-        //return IntStream.range(0, matrix.length).map(i -> matrix[i][columnNumber - 1]).toArray();
-        return res;
-
+        return Collections.min(valuesInColumn);
     }
 
-    public static void main(String[] args) {
-        String matrixAsString = "1 2 3\n4 5 6\n7 8 9\n8 7 6";
-        Matrix matrix = new Matrix(matrixAsString);
-        System.out.println(matrix.getRow(1));
-        System.out.println(matrix.getColumn(2));
+    private int getRowMax(int row) {
+        return Collections.max(values.get(row));
+    }
+
+
+    private class MatrixCoordinate {
+        int i,j;
+        public MatrixCoordinate(int i, int j) {
+            this.i = i;
+            this.j = j;
+        }
     }
 }
