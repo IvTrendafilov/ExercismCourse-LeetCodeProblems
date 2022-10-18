@@ -40,12 +40,7 @@ public class Knapsack {
                 new Item(118, 229),
                 new Item(120, 240)
         );
-        /*for (Item item: items){
-            System.out.println(item.getValue());
-        }*/
-       /* for (int i = 0; i < items.size()-1; i++){
-            System.out.println(items.get(i).getValue());
-        }*/
+
         System.out.println(knapsack.maximumValue(750,items));
     }
 
