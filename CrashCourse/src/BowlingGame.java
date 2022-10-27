@@ -26,7 +26,6 @@ public class BowlingGame {
                 if ((containsPins.get(i) == 10) && i < containsPins.size() - 2) {
                     finalScore += containsPins.get(i) + containsPins.get(i + 1) + containsPins.get(i + 2);
                     frameCount++;
-
                 } else if (i < containsPins.size() - 2 && (containsPins.get(i) + containsPins.get(i + 1) == 10)) {
                     finalScore += containsPins.get(i) + containsPins.get(i + 1) + containsPins.get(i + 2);
                     i++;
@@ -35,7 +34,7 @@ public class BowlingGame {
                     finalScore += containsPins.get(i) + containsPins.get(i + 1);
                     i++;
                     frameCount++;
-                } else if (i < containsPins.size() - 2 && (containsPins.get(i) + containsPins.get(i + 1) > 10)) {
+                } if (i < containsPins.size() - 2 && containsPins.get(i) != 10 &&(containsPins.get(i) + containsPins.get(i + 1) > 10)) {
                     throw new IllegalStateException("Pin count exceeds pins on the lane");
                 }
             }
